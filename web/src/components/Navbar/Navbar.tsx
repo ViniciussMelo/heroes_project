@@ -10,7 +10,7 @@ import './styles.css';
 
 function Navbar() {
     const [sidebar, setSidebar] = useState(false);
-    const [toolbarTitle, setToolbarTitle] = useState('Início');
+    const [toolbarTitle, setToolbarTitle] = useState('Wiki');
 
     const showSideBar = () => setSidebar(!sidebar);
 

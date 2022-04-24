@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Routes from './routes';
+import RouterApp from './routes';
 
 function App() {
   return (
     <>
-      <Routes />
+      <RouterApp />
     </>
   );
 }

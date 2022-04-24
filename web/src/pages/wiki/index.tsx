@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
-
+import React from 'react';
+import timelineOrder from './images/timelineOrder.jpg'
 
 const Wiki = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className="content" style={{
+        display: 'flex',
+        justifyContent: 'center'
+      }}>
+        <img src={timelineOrder} id="image1" alt="image1"/>
+      </div>
+    </>
   )
 }
 

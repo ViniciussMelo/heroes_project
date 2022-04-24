@@ -1,21 +1,19 @@
-import React from "react";
-import { createBrowserHistory } from "history";
-import { Router, Switch, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import Navbar from "./components/Navbar/Navbar";
-import Wiki from "./pages/wiki"
+import Movies from "./pages/movies";
+import Wiki from "./pages/wiki";
 
-const history = createBrowserHistory();
-
-const Routes = () => {
+const RouterApp = () => {
   return (
-    <Router history={history}>
-      <Switch>
-        <Navbar />
-        <Route path="/" exact component={Wiki} />
-      </Switch>
-    </Router>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Wiki />}/>
+        <Route path="/movies" element={<Movies />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
-export default Routes;
+export default RouterApp;
