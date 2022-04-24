@@ -8,7 +8,10 @@ const Wiki = () => {
         display: 'flex',
         justifyContent: 'center'
       }}>
-        <img src={timelineOrder} id="image1" alt="image1"/>
+        <img src={timelineOrder} style={{
+          width: '100%',
+          height: '90vh'
+        }} id="image1" alt="image1"/>
       </div>
     </>
   )
