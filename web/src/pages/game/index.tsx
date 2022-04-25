@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Select, Typography, Button, Table } from 'antd';
 import { VscRunAll } from "react-icons/vsc";
 
-import HeroesService from "../../services/HeroesService";
+import HeroesService, { CompareHero, CompareResponseDto } from "../../services/HeroesService";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -24,6 +24,7 @@ interface HeroInterface {
 }
 
 interface DataSourceInterface {
+  id: number;
   key: number;
   intelligence: number;
   strength: number;
@@ -66,13 +67,14 @@ const columns = [
   },
 ];
 
+const colorHero1 = "Green";
+const colorHero2 = "brown";
 
 const Game = () => {
   const [heroes, setHeroes] = React.useState<HeroInterface[]>([]);
-  const [hero1, setHero1] = React.useState<number>();
-  const [hero2, setHero2] = React.useState<number>();
   const [heroDataSource1, setHeroDataSource1] = React.useState<DataSourceInterface[]>([]);
   const [heroDataSource2, setHeroDataSource2] = React.useState<DataSourceInterface[]>([]);
+  const [heroMessage, setHeroMessage] = useState<CompareResponseDto>({} as CompareResponseDto);
 
   const loadHeroes = async () => {
     const { data } = await HeroesService.findAll();
@@ -86,6 +88,7 @@ const Game = () => {
     if (!hero) return
 
     const heroDataSource: DataSourceInterface = {
+      id: hero.id,
       key: hero.id,
       intelligence: hero.powerstats.intelligence,
       strength: hero.powerstats.strength,
@@ -111,8 +114,35 @@ const Game = () => {
   }
 
   const compareHeroes = async () => {
-    console.log('1: ', hero1);
-    console.log('2: ', hero2);
+    const hero1ToCompare: CompareHero = {
+      id: heroDataSource1[0].id,
+      powerstats: {
+        intelligence: heroDataSource1[0].intelligence,
+        strength: heroDataSource1[0].strength,
+        speed: heroDataSource1[0].speed,
+        durability: heroDataSource1[0].durability,
+        power: heroDataSource1[0].power,
+        combat: heroDataSource1[0].combat,
+      }
+    }
+    const hero2ToCompare: CompareHero = {
+      id: heroDataSource2[0].id,
+      powerstats: {
+        intelligence: heroDataSource2[0].intelligence,
+        strength: heroDataSource2[0].strength,
+        speed: heroDataSource2[0].speed,
+        durability: heroDataSource2[0].durability,
+        power: heroDataSource2[0].power,
+        combat: heroDataSource2[0].combat,
+      }
+    }
+
+    const message = await HeroesService.compare({
+      hero1: hero1ToCompare,
+      hero2: hero2ToCompare
+    });
+
+    setHeroMessage(message);
   }
 
   useEffect(() => {
@@ -127,6 +157,26 @@ const Game = () => {
       }}>
         <Title>Hero Combat</Title>
       </div>
+      {
+        heroMessage &&
+        (  <div style={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <Title 
+            style=
+            { heroMessage.winner === 1 ? 
+              { color: colorHero1 } : 
+              heroMessage.winner === 0 ?
+                { color: "black" } :
+                { color: colorHero2 }
+            }
+              >
+                {heroMessage.message}
+              </Title>
+          </div>
+        )
+      }      
       <div style={{
         display: 'flex',
         marginTop: '100px'
@@ -138,7 +188,7 @@ const Game = () => {
           }}
         >
 
-          <Title>Hero 1</Title>
+          <Title style={{ color: colorHero1 }}>Hero 1</Title>
           <Select 
             defaultValue={heroes[0] ? heroes[0].id : null } 
             style={{ width: '80%' }}
@@ -170,7 +220,7 @@ const Game = () => {
             textAlign: 'center'
           }}
         >
-          <Title>Hero 2</Title>
+          <Title style={{ color: colorHero2 }}>Hero 2</Title>
           <Select 
             defaultValue={heroes[0] ? heroes[0].id : null } 
             style={{ width: '80%' }}

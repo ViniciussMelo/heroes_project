@@ -10,6 +10,7 @@ const routes = express.Router();
 
 routes.get('/heroes', heroesController.index);
 routes.get('/heroes/:id', heroesController.getById);
+routes.post('/heroes/compare', heroesController.compare);
 
 routes.post('/login', sessionController.verify);
 

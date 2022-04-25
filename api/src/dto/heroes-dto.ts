@@ -1,3 +1,15 @@
+export interface CompareHeroDto {
+  id: number;
+  powerstats: {
+    intelligence: number;
+    strength: number;
+    speed: number;
+    durability: number;
+    power: number;
+    combat: number;
+  }
+}
+
 export class GetHeroesDto implements Readonly<GetHeroesDto> {
   id: number;
   name: string;
