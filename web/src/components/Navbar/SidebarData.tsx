@@ -2,7 +2,7 @@ import React from 'react';
 import { SiWikipedia } from "react-icons/si";
 import { BiCameraMovie } from "react-icons/bi";
 import { RiCharacterRecognitionFill } from "react-icons/ri";
-import { FiLogIn } from "react-icons/fi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 
 export const SidebarData = [
     {
@@ -27,6 +27,12 @@ export const SidebarData = [
         title: 'Login',
         path: '/login',
         icon: <FiLogIn />,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Logout',
+        path: '/login/username',
+        icon: <FiLogOut />,
         cName: 'nav-text'
     }
 ]

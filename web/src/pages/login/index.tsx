@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import 'antd/dist/antd.css';
 import './index.css';
@@ -14,6 +14,7 @@ interface LoginInterface {
 }
 
 const Login = () => {
+  const { username } = useParams();
   const navigate = useNavigate();
 
   const onFinish = async ({ username, password }: LoginInterface) => {
@@ -22,11 +23,25 @@ const Login = () => {
       
       localStorage.setItem('username', username);
 
-      navigate('/')
+      sendToCreateHero();
     } catch (err) {
       alert('Invalid password or email!');
     }
   }
+
+  const sendToCreateHero = () => {
+    navigate('/createHero');
+  }
+
+  useEffect(() => {
+    if (username) {
+      localStorage.removeItem('username');
+    } else {
+      const storageUser = localStorage.getItem('username');
+  
+      if (storageUser) sendToCreateHero();
+    }
+  }, []);
 
   return (
     <>

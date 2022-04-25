@@ -1,6 +1,7 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import Navbar from "./components/Navbar/Navbar";
+import CreateHero from './pages/createHero';
 import Movies from "./pages/movies";
 import Heroes from "./pages/heroes";
 import Login from './pages/login';
@@ -17,6 +18,8 @@ const RouterApp = () => {
         <Route path="/heroes" element={<Heroes />} />
         <Route path="/hero/:id" element={<Hero />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/login/:username" element={<Login />} />
+        <Route path="/createHero" element={<CreateHero />} />
       </Routes>
     </BrowserRouter>
   )
