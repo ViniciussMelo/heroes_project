@@ -15,7 +15,7 @@ interface HeroInterface {
     sm: string;
   };
   powerstats: {
-    intelligence:number;
+    intelligence: number;
     strength: number;
     speed: number;
     durability: number;
@@ -100,7 +100,7 @@ const Hero = () => {
 
   useEffect(() => {
     loadHero(`${id}`);
-  }, []);
+  }, [id]);
 
   const loadHero = async (id: string) => {
     const { data } = await HeroesService.find(+id);

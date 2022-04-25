@@ -7,6 +7,7 @@ import Heroes from "./pages/heroes";
 import Login from './pages/login';
 import Wiki from "./pages/wiki";
 import Hero from './pages/hero';
+import Game from './pages/game';
 
 const RouterApp = () => {
   return (
@@ -20,6 +21,7 @@ const RouterApp = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/login/:username" element={<Login />} />
         <Route path="/createHero" element={<CreateHero />} />
+        <Route path="/game" element={<Game />} />
       </Routes>
     </BrowserRouter>
   )
