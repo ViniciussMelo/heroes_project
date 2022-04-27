@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Select, Typography, Button, Table } from 'antd';
 import { VscRunAll } from "react-icons/vsc";
+import { FaRandom } from "react-icons/fa";
 
 import HeroesService, { CompareHero, CompareResponseDto } from "../../services/HeroesService";
 
@@ -25,6 +26,7 @@ interface HeroInterface {
 
 interface DataSourceInterface {
   id: number;
+  name: string;
   key: number;
   intelligence: number;
   strength: number;
@@ -90,6 +92,7 @@ const Game = () => {
     const heroDataSource: DataSourceInterface = {
       id: hero.id,
       key: hero.id,
+      name: hero.name,
       intelligence: hero.powerstats.intelligence,
       strength: hero.powerstats.strength,
       speed: hero.powerstats.speed,
@@ -114,6 +117,14 @@ const Game = () => {
   }
 
   const compareHeroes = async () => {
+    if (!heroDataSource1.length) {
+      return alert('Choose a hero1!')
+    }
+    
+    if (!heroDataSource2.length) {
+      return alert('Choose a hero2!')
+    }
+
     const hero1ToCompare: CompareHero = {
       id: heroDataSource1[0].id,
       powerstats: {
@@ -143,6 +154,22 @@ const Game = () => {
     });
 
     setHeroMessage(message);
+  }
+
+  const randomSelectHero2 = () => {
+    const randomHero = heroes[Math.floor(Math.random() * heroes.length)];
+
+    setHeroDataSource2([{
+      id: randomHero.id,
+      key: randomHero.id,
+      name: randomHero.name,
+      combat: randomHero.powerstats.combat,
+      durability: randomHero.powerstats.durability,
+      intelligence: randomHero.powerstats.intelligence,
+      power: randomHero.powerstats.power,
+      speed: randomHero.powerstats.speed,
+      strength: randomHero.powerstats.strength,
+    }]);
   }
 
   useEffect(() => {
@@ -189,10 +216,16 @@ const Game = () => {
         >
 
           <Title style={{ color: colorHero1 }}>Hero 1</Title>
-          <Select 
-            defaultValue={heroes[0] ? heroes[0].id : null } 
+          <Select
             style={{ width: '80%' }}
             onChange={setValuesHero1}
+            filterOption={(inputValue, option: any) =>
+              option.props.children
+                .toString()
+                .toLowerCase()
+                .includes(inputValue.toLowerCase())
+            }
+            showSearch
           >
             {heroes.map(hero => (
               <Option key={hero.id}>{hero.name}</Option>
@@ -222,9 +255,16 @@ const Game = () => {
         >
           <Title style={{ color: colorHero2 }}>Hero 2</Title>
           <Select 
-            defaultValue={heroes[0] ? heroes[0].id : null } 
             style={{ width: '80%' }}
             onChange={setValuesHero2}
+            value={heroDataSource2[0]?.name || ''}
+            filterOption={(inputValue, option: any) =>
+              option.props.children
+                .toString()
+                .toLowerCase()
+                .includes(inputValue.toLowerCase())
+            }
+            showSearch
           >
             {heroes.map(hero => (
               <Option key={hero.id}>{hero.name}</Option>
@@ -251,13 +291,22 @@ const Game = () => {
       <div style={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
         }}>
+          <Button 
+            icon={<FaRandom />} 
+            style={{
+              marginTop: 30,
+              marginRight: 30
+            }}
+            onClick={randomSelectHero2}
+          >
+            Random selection Hero 2
+          </Button>
           <Button 
             type="primary"
             icon={<VscRunAll />} 
             style={{
-              marginTop: 30
+              marginTop: 30,
             }}
             onClick={compareHeroes}
           >
