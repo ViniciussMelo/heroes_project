@@ -24,7 +24,7 @@ To run the program on your computer, the following configurations / installation
 >
 > 	or
 >
-> 	nmp install
+> 	npm install
 > ```
 > Now enter in the project's web with your command prompt:
 > ```
@@ -46,7 +46,7 @@ To run the program on your computer, the following configurations / installation
 >
 > Access the project's web folder with your command prompt:
 > ```
-> 	cd stock-control/web
+> 	cd heroes_project/web
 > ```
 > and run this command: 
 > ```
@@ -54,7 +54,7 @@ To run the program on your computer, the following configurations / installation
 > ```
 > In another command prompt, access in the project's api folder:
 > ```
-> 	cd stock_control/api
+> 	cd heroes_project/api
 > ```
 > Now, run this command:
 > ```
